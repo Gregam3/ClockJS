@@ -4,20 +4,24 @@
     <meta charset="UTF-8">
     <title>Clock</title>
     <link href="style.css">
+    <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
 
 </head>
 <body>
+  <svg height="310" width="500">
+      <!-- top left, -->
+      <polygon id="hand" points="150,150 180, 300 200,150" style="color:'red'">
+        <animatetransform
+          attributeName="transform"
+          attributeType="XML"
+          type="rotate"
+          dur="3600s"
+          repeatCount="indefinite"/>
+      </polygon>
+  </svg>
 
-<svg height="310" width="500">
-    <polygon id="hand" points="240,10 210, 300 200,10" style="color:'red'">
-      <animatetransform
-        attributeName="transform"
-        attributeType="XML"
-        type="rotate"
-        dur="3600s"
-        repeatCount="indefinite"/>
-    </polygon>
-</svg>
+  <p id="digital-clock" style="font-family: 'Orbitron', sans-serif; color:red; font-size:
+  60px"></p>
 </body>
 
 <script type="text/javascript" src="clock.js"></script>
