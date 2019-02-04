@@ -18,7 +18,7 @@ function formatTime(num) {
 
 const startClock = async () => {
   while (true) {
-    hand.groupTransform.rotate.angle = rotation;
+    hand.setAttribute("transform", "rotate(" + rotation + ")");
     rotation += 6;
     document.getElementById("digital-clock").innerHTML = convertToDigitalTime(new Date());
 
