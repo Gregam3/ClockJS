@@ -9,11 +9,28 @@
 </head>
 <body>
   <svg height="400" width="500">
-      <!-- top left, -->
-      <rect id="hand" x="194" y="50" width="20" height="160"/>
+    <style>
+      .clock-number {
+         font-size: 30px;
+         font-family: Georgia, serif;
+      }
+   </style>
+     <!-- Clock face -->
+     <circle id="face" cx="194" cy="200" r="170"  style="fill:rgb(255,255,255); stroke:#000;"/>
+
+     <!-- Clock numbers -->
+     <text x="180" y="60" class="clock-number">12</text>
+     <text x="324" y="205" class="clock-number">3</text>
+     <text x="190" y="350"class="clock-number">6</text>
+     <text x="44" y="205" class="clock-number">9</text>
+
+     <!-- Hands-->
+     <rect id="hour-hand" x="194" y="110" width="20" height="100" style="fill:rgb(0,0,0);"/>
+     <rect id="minute-hand" x="194" y="70" width="13" height="140" rx="10" ry="10" style="fill:rgb(85,85,85);"/>
+     <rect id="second-hand" x="194" y="50" width="8" height="160" style="fill:rgb(255,0,0);"/>
   </svg>
 
-  <p id="digital-clock" style="font-family: 'Orbitron', sans-serif; color:red; font-size:60px"></p>
+  <p id="digital-clock" style="font-family: 'Orbitron', sans-serif; color:red; font-size:100px; background-color:black; padding: 20px;"></p>
 </body>
 
 <script type="text/javascript" src="clock.js"></script>
