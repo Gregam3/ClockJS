@@ -1,5 +1,6 @@
-var rotation = 0;
-var hand = document.getElementById("hand")
+const ROTATION_INCREMENT = 360 / 60
+
+let hand = document.getElementById("hand")
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -17,9 +18,11 @@ function formatTime(num) {
 }
 
 const startClock = async () => {
+  let rotation = new Date().getSeconds() * ROTATION_INCREMENT;
+
   while (true) {
-    hand.setAttribute("transform", "rotate(" + rotation + ")");
-    rotation += 6;
+    hand.setAttribute("transform", "rotate(" + rotation + " 200 200)");
+    rotation += ROTATION_INCREMENT;
     document.getElementById("digital-clock").innerHTML = convertToDigitalTime(new Date());
 
     await sleep(1000);
