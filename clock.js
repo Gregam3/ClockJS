@@ -18,6 +18,8 @@ const second = {
   text: document.getElementById("second-offset-text")
 }
 
+const unixText = document.getElementById("unix-time");
+
 let offset =  {
   second: 0,
   minute: 0,
@@ -62,8 +64,7 @@ hour.slider.oninput = function() {
 
 const tick = async () => {
   updateClock();
-  //To ensure seconds are accurate
-  await sleep(1000 - new Date().getMilliseconds());
+  await sleep(100);
   tick();
 }
 
@@ -72,13 +73,24 @@ function updateClock() {
 
   let secondRotation = (time.getSeconds() * ROTATION_INCREMENT) + (offset.second * ROTATION_INCREMENT)
   let minuteRotation = (time.getMinutes() * ROTATION_INCREMENT) + (offset.minute * ROTATION_INCREMENT)
-  let hourRotation = (time.getHours() * (60 / 12) * ROTATION_INCREMENT) + (offset.minute * ROTATION_INCREMENT)
+  let hourRotation = (time.getHours() * (60 / 12) * ROTATION_INCREMENT) + (offset.hour * ((60 / 12) * ROTATION_INCREMENT))
 
   hour.hand.setAttribute("transform", "rotate(" + hourRotation + " 200 200)");
   minute.hand.setAttribute("transform", "rotate(" + minuteRotation + " 200 200)");
   second.hand.setAttribute("transform", "rotate(" + secondRotation + " 200 200)");
 
   document.getElementById("digital-clock").innerHTML = convertToDigitalTime(new Date());
+
+  unixText.innerHTML = time.getTime() +
+    (offset.second * 1000) + (offset.minute * 60 * 1000) + (offset.hour * 60 * 60 * 1000)
+}
+
+const flash = async (visible) => {
+  document.getElementById("command-input").setAttribute("opacity", (visible) ? 1 : 0);
+
+  await sleep(1000);
+  flash(!visible);
 }
 
 tick();
+flash(true);

@@ -5,10 +5,11 @@
     <title>Clock</title>
     <link href="style.css">
     <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Terminal+Dosis" />
 
 </head>
 <body>
-  <svg height="400" width="500">
+  <svg height="400" width="370">
     <style>
       .clock-number-primary {
          font-size: 30px;
@@ -42,6 +43,24 @@
      <rect id="minute-hand" x="194" y="70" width="13" height="140" rx=5  style="fill:rgb(0,0,0);"/>
      <rect id="second-hand" x="194" y="50" width="8" height="160" rx=10 style="fill:rgb(255,0,0);"/>
   </svg>
+
+  <svg height="400" width="300" style="float:right">
+    <style>
+      .terminal-text {
+        font-family: Terminal Dosis;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    </style>
+
+    <rect x="0" y="110" width="260" height="200" rx=1 ry=5 style="fill:rgb(189,145,70);"/>
+    <rect x="20" y="130" width="180" height="160" rx=1 ry=5 style="fill:rgb(98,86,68);"/>
+    <rect x="210" y="110" width="1" height="200" rx=1 ry=5 style="fill:rgb(0,0,0);"/>
+    <rect x="30" y="140" width="160" height="140" rx=10 ry=10 style="fill:rgb(0,0,0);"/>
+    <text id="command-input" class="terminal-text" x="40" y="165" fill="#fff">></text>
+    <text class="terminal-text flashing" x="50" y="165" fill="#fff">date +%s</text>
+    <text id="unix-time" class="terminal-text" x="40" y="190" fill="#fff"></text>
+  </svg>
   <br>
   <br>
    Second Offset : <div id="second-offset-text"></div>
@@ -56,6 +75,7 @@
    <input type="range" min="0" max="23" value="0" class="slider" id="hour-slider">
 
   <p id="digital-clock" style="font-family: 'Orbitron', sans-serif; color:red; font-size:100px; background-color:black; padding: 20px;"></p>
+
 </body>
 
 <script type="text/javascript" src="clock.js"></script>
