@@ -31,17 +31,29 @@
      <text x="300" y="265" class="clock-number-secondary">4</text>
      <text x="260" y="320" class="clock-number-secondary">5</text>
      <text x="190" y="350"class="clock-number-primary">6</text>
-     <text x="120" y="320" class="clock-number-secondary">7</text>
-     <text x="70" y="265" class="clock-number-secondary">8</text>
+     <text x="130" y="320" class="clock-number-secondary">7</text>
+     <text x="60" y="280" class="clock-number-secondary">8</text>
      <text x="44" y="205" class="clock-number-primary">9</text>
      <text x="70" y="140" class="clock-number-secondary">10</text>
      <text x="120" y="80" class="clock-number-secondary">11</text>
 
      <!-- Hands-->
      <rect id="hour-hand" x="194" y="110" width="20" height="100" rx=10 ry=10 style="fill:rgb(0,0,0);"/>
-     <rect id="minute-hand" x="194" y="70" width="13" height="140" rx=5  style="fill:rgb(85,85,85);"/>
+     <rect id="minute-hand" x="194" y="70" width="13" height="140" rx=5  style="fill:rgb(0,0,0);"/>
      <rect id="second-hand" x="194" y="50" width="8" height="160" rx=10 style="fill:rgb(255,0,0);"/>
   </svg>
+  <br>
+  <br>
+   Second Offset : <div id="second-offset-text"></div>
+   <input type="range" min="0" max="59" value="0" class="slider" id="second-slider">
+
+   <br>
+   Minute Offset : <div id="minute-offset-text"></div>
+   <input type="range" min="0" max="59" value="0" class="slider" id="minute-slider">
+
+   <br>
+   Hour Offset : <div id="hour-offset-text"></div>
+   <input type="range" min="0" max="23" value="0" class="slider" id="hour-slider">
 
   <p id="digital-clock" style="font-family: 'Orbitron', sans-serif; color:red; font-size:100px; background-color:black; padding: 20px;"></p>
 </body>
