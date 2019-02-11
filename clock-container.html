@@ -9,58 +9,71 @@
 
 </head>
 <body>
-  <svg height="400" width="370">
+  <svg height="800" width="900">
     <style>
       .clock-number-primary {
-         font-size: 30px;
+         font-size: 50px;
          font-family: Georgia, serif;
       }
 
       .clock-number-secondary {
-        font-size: 20px;
+        font-size: 35px;
         font-family: Georgia, serif;
       }
-   </style>
-     <!-- Clock face -->
-     <circle id="face" cx="194" cy="200" r="170"  style="fill:rgb(255,255,255); stroke:#000;"/>
 
-     <!-- Clock numbers : could add with JS loop but would be just as finicky  -->
-     <text x="180" y="60" class="clock-number-primary">12</text>
-     <text x="260" y="80" class="clock-number-secondary">1</text>
-     <text x="310" y="140" class="clock-number-secondary">2</text>
-     <text x="324" y="205" class="clock-number-primary">3</text>
-     <text x="300" y="265" class="clock-number-secondary">4</text>
-     <text x="260" y="320" class="clock-number-secondary">5</text>
-     <text x="190" y="350"class="clock-number-primary">6</text>
-     <text x="130" y="320" class="clock-number-secondary">7</text>
-     <text x="60" y="280" class="clock-number-secondary">8</text>
-     <text x="44" y="205" class="clock-number-primary">9</text>
-     <text x="70" y="140" class="clock-number-secondary">10</text>
-     <text x="120" y="80" class="clock-number-secondary">11</text>
+      .digital-clock-text-small {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 25px;
+        font-weight: bold;
+      }
 
-     <!-- Hands-->
-     <rect id="hour-hand" x="194" y="110" width="20" height="100" rx=10 ry=10 style="fill:rgb(0,0,0);"/>
-     <rect id="minute-hand" x="194" y="70" width="13" height="140" rx=5  style="fill:rgb(0,0,0);"/>
-     <rect id="second-hand" x="194" y="50" width="8" height="160" rx=10 style="fill:rgb(255,0,0);"/>
-  </svg>
+      .digital-clock-text {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 30px;
+        font-weight: bold;
+      }
 
-  <svg height="400" width="300" style="float:right">
-    <style>
       .terminal-text {
         font-family: Terminal Dosis;
         font-size: 20px;
         font-weight: bold;
       }
-    </style>
+   </style>
+    <!-- Control Panel  -->
+    <rect x="600" y="200" width="300" height="350" style="fill:rgb(255,255,255); stroke:#000; stroke-width: 3"/>
 
-    <rect x="0" y="110" width="240" height="200" rx=1 ry=5 style="fill:rgb(216, 207, 175);"/>
-    <rect x="20" y="130" width="200" height="160" rx=1 ry=5 style="fill:rgb(98,86,68);"/>
-    <!-- <rect x="210" y="110" width="1" height="200" rx=1 ry=5 style="fill:rgb(0,0,0);"/> -->
-    <rect x="30" y="140" width="180" height="140" rx=10 ry=10 style="fill:rgb(0,0,0);"/>
-    <text id="command-input" class="terminal-text" x="40" y="165" fill="#fff">></text>
-    <text class="terminal-text flashing" x="50" y="165" fill="#fff">date +%s</text>
-    <text id="unix-time" class="terminal-text" x="40" y="190" fill="#fff"></text>
+    <polygon points="850, 234 865, 210 880, 234" onclick="cum()"/>
+    <polygon points="850, 274 865, 250 880, 274"/>
+
+
+     <!-- Clock face -->
+     <circle id="face" cx="390" cy="380" r="340"  style="fill:rgb(255,255,255); stroke:#000;"/>
+
+     <!-- Clock numbers : could add with JS loop but would be just as finicky  -->
+     <text x="360" y="80" class="clock-number-primary">12</text>
+     <text x="520" y="130" class="clock-number-secondary">1</text>
+     <text x="630" y="240" class="clock-number-secondary">2</text>
+     <text x="680" y="380" class="clock-number-primary">3</text>
+     <text x="630" y="530" class="clock-number-secondary">4</text>
+     <text x="530" y="620" class="clock-number-secondary">5</text>
+     <text x="360" y="670"class="clock-number-primary">6</text>
+     <text x="270" y="620" class="clock-number-secondary">7</text>
+     <text x="150" y="520" class="clock-number-secondary">8</text>
+     <text x="80" y="380" class="clock-number-primary">9</text>
+     <text x="130" y="220" class="clock-number-secondary">10</text>
+     <text x="250" y="140" class="clock-number-secondary">11</text>
+
+     <<!-- Digital Clock -->
+     <rect x="300" y="200" width="200" height="60" rx=40 ry=40 style="fill:rgb(0,0,0);"/>
+     <text id="digital-clock" class="digital-clock-text" x="320" y="230" fill="red">16:03:54</text>
+     <text id="unix-time" class="terminal-text" x="320" y="250" fill="#fff"></text>
+
+     <!-- Hands-->
+     <rect id="hour-hand" x="370" y="340" width="40" height="200" rx=20 ry=20 style="fill:rgb(0,0,0);stroke:white"/>
+     <rect id="minute-hand" x="370" y="340" width="26" height="260" rx=20  style="fill:rgb(0,0,0);stroke:white"/>
+     <rect id="second-hand" x="370" y="340" width="16" height="320" rx=20 style="fill:rgb(255,0,0);"/>
   </svg>
+
   <br>
   <br>
    Second Offset : <div id="second-offset-text"></div>
@@ -74,7 +87,7 @@
    Hour Offset : <div id="hour-offset-text"></div>
    <input type="range" min="0" max="23" value="0" class="slider" id="hour-slider">
 
-  <p id="digital-clock" style="font-family: 'Orbitron', sans-serif; color:red; font-size:100px; background-color:black; padding: 20px;"></p>
+   <br>
 
 </body>
 

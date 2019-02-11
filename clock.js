@@ -23,7 +23,8 @@ const unixText = document.getElementById("unix-time");
 let offset =  {
   second: 0,
   minute: 0,
-  hour: 0
+  hour: 0,
+  base: 180
 }
 
 function sleep(ms) {
@@ -34,6 +35,10 @@ function convertToDigitalTime(date) {
   return formatTime(date.getHours(), offset.hour, 24) + ':'
   + formatTime(date.getMinutes(), offset.minute, 60) + ':'
   + formatTime(date.getSeconds(), offset.second, 60);
+}
+
+function cum() {
+  console.log('yeet');
 }
 
 function formatTime(num, offset, max) {
@@ -71,13 +76,13 @@ const tick = async () => {
 function updateClock() {
   const time = new Date();
 
-  let secondRotation = (time.getSeconds() * ROTATION_INCREMENT) + (offset.second * ROTATION_INCREMENT)
-  let minuteRotation = (time.getMinutes() * ROTATION_INCREMENT) + (offset.minute * ROTATION_INCREMENT)
-  let hourRotation = (time.getHours() * (60 / 12) * ROTATION_INCREMENT) + (offset.hour * ((60 / 12) * ROTATION_INCREMENT))
+  let secondRotation = (time.getSeconds() * ROTATION_INCREMENT) + (offset.second * ROTATION_INCREMENT) + offset.base
+  let minuteRotation = (time.getMinutes() * ROTATION_INCREMENT) + (offset.minute * ROTATION_INCREMENT)  + offset.base
+  let hourRotation = (time.getHours() * (60 / 12) * ROTATION_INCREMENT) + (offset.hour * ((60 / 12) * ROTATION_INCREMENT))  + offset.base
 
-  hour.hand.setAttribute("transform", "rotate(" + hourRotation + " 200 200)");
-  minute.hand.setAttribute("transform", "rotate(" + minuteRotation + " 200 200)");
-  second.hand.setAttribute("transform", "rotate(" + secondRotation + " 200 200)");
+  hour.hand.setAttribute("transform", "rotate(" + hourRotation + " 380 380)");
+  minute.hand.setAttribute("transform", "rotate(" + minuteRotation + " 380 380)");
+  second.hand.setAttribute("transform", "rotate(" + secondRotation + " 380 380)");
 
   document.getElementById("digital-clock").innerHTML = convertToDigitalTime(new Date());
 
