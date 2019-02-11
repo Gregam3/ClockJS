@@ -37,10 +37,6 @@ function convertToDigitalTime(date) {
   + formatTime(date.getSeconds(), offset.second, 60);
 }
 
-function cum() {
-  console.log('yeet');
-}
-
 function formatTime(num, offset, max) {
   num = num + parseInt(offset)
 
