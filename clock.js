@@ -18,14 +18,28 @@ const second = {
   text: document.getElementById("second-offset-text")
 }
 
+const offsetText = {
+  second: document.getElementById("second-offset-text"),
+  minute: document.getElementById("minute-offset-text"),
+  hour: document.getElementById("hour-offset-text")
+}
+
 const unixText = document.getElementById("unix-time");
 
-let offsets =  {
-  second: 0,
-  minute: 0,
-  hour: 0,
-  base: 180
-}
+let offsets = {};
+
+function resetOffsets() {
+  offsets = {
+    second: 0,
+    minute: 0,
+    hour: 0,
+    base: 180
+  }
+
+  for(key in offsetText) offsetText[key].innerHTML = "0"
+};
+
+resetOffsets();
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -53,21 +67,24 @@ function changeOffset(elementId, num) {
     case 'second-up':
     case 'second-down':
       offsets.second = safeCalc(offsets.second, num, 60);
+      offsetText.second.innerHTML = offsets.second;
       break;
     case 'minute-up':
     case 'minute-down':
       offsets.minute = safeCalc(offsets.minute, num, 60);
+      offsetText.minute.innerHTML = offsets.minute;
       break;
     case 'hour-up':
     case 'hour-down':
       offsets.hour = safeCalc(offsets.hour, num, 24);
+      offsetText.hour.innerHTML = offsets.hour;
       break;
   }
 
   function safeCalc(offset, num, max) {
     const newOffset = offset + num;
-    if(newOffset > max) return newOffset - max
-    else if(newOffset < 0) return max - newOffset
+    if(newOffset >= max) return newOffset - max
+    else if(newOffset < 0) return max + newOffset
     return newOffset;
   }
 

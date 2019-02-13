@@ -21,6 +21,11 @@
         font-family: Georgia, serif;
       }
 
+      .offset-text {
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        font-size: 15px;
+      }
+
       .digital-clock-text-small {
         font-family: 'Orbitron', sans-serif;
         font-size: 25px;
@@ -38,21 +43,33 @@
         font-size: 20px;
         font-weight: bold;
       }
+
+      .clickable {
+        cursor:pointer;
+        user-select: none;
+      }
    </style>
     <!-- Control Panel  -->
     <rect x="600" y="200" width="300" height="350" style="fill:rgb(255,255,255); stroke:#000; stroke-width: 3"/>
 
-    <text x=730 y=245 fill="black" >Second Offset</text>
-    <polygon id="second-up" points="850, 234 865, 210 880, 234" onClick="changeOffset('second-up', 1)")/>
-    <polygon id="second-down" points="850, 244 865, 270 880, 244" onClick="changeOffset('second-down', -1)")/>
+    <text class="offset-text" x=720 y=245 fill="black">Second Offset:</text>
+    <text id="second-offset-text" class="offset-text" x=830 y=245 fill="black"></text>
+    <polygon id="second-up" class="clickable" points="850, 234 865, 210 880, 234" onClick="changeOffset('second-up', 1)")/>
+    <polygon id="second-down"  class="clickable" accesskey=""points="850, 244 865, 270 880, 244" onClick="changeOffset('second-down', -1)")/>
 
-    <text x=730 y=315 fill="black" >Minute Offset</text>
-    <polygon id="minute-up" points="850, 304 865, 280 880, 304" onClick="changeOffset('minute-up', 1)"/>
-    <polygon id="minute-down" points="850, 314 865, 340 880, 314" onClick="changeOffset('minute-down', -1)"/>
+    <text class="offset-text" x=730 y=315 fill="black" >Minute Offset:</text>
+    <text id="minute-offset-text" class="offset-text" x=830 y=315 fill="black"></text>
+    <polygon id="minute-up" class="clickable" points="850, 304 865, 280 880, 304" onClick="changeOffset('minute-up', 1)"/>
+    <polygon id="minute-down" class="clickable" points="850, 314 865, 340 880, 314" onClick="changeOffset('minute-down', -1)"/>
 
-    <text x=730 y=385 fill="black" >Hour Offset</text>
-    <polygon id="hour-up" points="850, 374 865, 350 880, 374" onClick="changeOffset('hour-up', 1)"/>
-    <polygon id="hour-down" points="850, 384 865, 410 880, 384" onClick="changeOffset('hour-down', -1)"/>
+    <text class="offset-text" x=740 y=385>Hour Offset:</text>
+    <text id="hour-offset-text" class="offset-text" x=830 y=385 fill="black"></text>
+    <polygon id="hour-up" class="clickable" points="850, 374 865, 350 880, 374" onClick="changeOffset('hour-up', 1)"/>
+    <polygon id="hour-down" class="clickable" points="850, 384 865, 410 880, 384" onClick="changeOffset('hour-down', -1)"/>
+
+
+    <text class="offset-text clickable" x=750 y=470 fill="black" onClick='resetOffsets()'>Reset Offsets</text>
+    <rect x="745" y="455" width="100" height="20" rx=20 ry=20 style="fill:none;stroke:black"/>
 
     <!-- Clock face -->
     <circle id="face" cx="390" cy="380" r="340"  style="fill:rgb(255,255,255); stroke:#000;"/>
@@ -74,6 +91,9 @@
     <<!-- Digital Clock -->
     <rect x="300" y="200" width="200" height="60" rx=40 ry=40 style="fill:rgb(0,0,0);"/>
     <text id="digital-clock" class="digital-clock-text" x="320" y="230" fill="red">16:03:54</text>
+
+    <!-- Unix time -->
+    <text id="unix-time" class="terminal-text" x="320" y="250" fill="#fff">Unix</text>
     <text id="unix-time" class="terminal-text" x="320" y="250" fill="#fff"></text>
 
     <!-- Hands-->
@@ -81,21 +101,6 @@
     <rect id="minute-hand" x="370" y="340" width="26" height="260" rx=20  style="fill:rgb(0,0,0);stroke:white"/>
     <rect id="second-hand" x="370" y="340" width="16" height="320" rx=20 style="fill:rgb(255,0,0);"/>
   </svg>
-
-  <br>
-  <br>
-   Second Offset : <div id="second-offset-text"></div>
-   <input type="range" min="0" max="59" value="0" class="slider" id="second-slider">
-
-   <br>
-   Minute Offset : <div id="minute-offset-text"></div>
-   <input type="range" min="0" max="59" value="0" class="slider" id="minute-slider">
-
-   <br>
-   Hour Offset : <div id="hour-offset-text"></div>
-   <input type="range" min="0" max="23" value="0" class="slider" id="hour-slider">
-
-   <br>
 
 </body>
 

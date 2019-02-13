@@ -1,13 +1,27 @@
-svg {
-  transform: rotate(180deg);
-}
-
-#digital-clock {
-   color:red;
-   font-size: 60px;
-}
-
-.clock-number {
-   font-size: 30px;
+.clock-number-primary {
+   font-size: 50px;
    font-family: Georgia, serif;
+}
+
+.clock-number-secondary {
+  font-size: 35px;
+  font-family: Georgia, serif;
+}
+
+.digital-clock-text-small {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.digital-clock-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.terminal-text {
+  font-family: Terminal Dosis;
+  font-size: 20px;
+  font-weight: bold;
 }
