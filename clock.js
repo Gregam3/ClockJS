@@ -20,7 +20,7 @@ const second = {
 
 const unixText = document.getElementById("unix-time");
 
-let offset =  {
+let offsets =  {
   second: 0,
   minute: 0,
   hour: 0,
@@ -32,36 +32,47 @@ function sleep(ms) {
 }
 
 function convertToDigitalTime(date) {
-  return formatTime(date.getHours(), offset.hour, 24) + ':'
-  + formatTime(date.getMinutes(), offset.minute, 60) + ':'
-  + formatTime(date.getSeconds(), offset.second, 60);
+  return formatTime(date.getHours(), offsets.hour, 24) + ':'
+  + formatTime(date.getMinutes(), offsets.minute, 60) + ':'
+  + formatTime(date.getSeconds(), offsets.second, 60);
 }
 
-function formatTime(num, offset, max) {
-  num = num + parseInt(offset)
+function formatTime(num, offsets, max) {
+  num = num + parseInt(offsets)
 
   if(num < 10) return '0' + num
   else if (num >= max) return formatTime(num - max, 0)
   return num;
 }
 
-second.slider.oninput = function() {
-  offset.second = this.value;
-  second.text.innerHTML = this.value;
-  updateClock();
+function changeOffset(elementId, num) {
+  console.log('changing offset', num, offsets);
+  flash(false, false, elementId);
+
+  switch (elementId) {
+    case 'second-up':
+    case 'second-down':
+      offsets.second = safeCalc(offsets.second, num, 60);
+      break;
+    case 'minute-up':
+    case 'minute-down':
+      offsets.minute = safeCalc(offsets.minute, num, 60);
+      break;
+    case 'hour-up':
+    case 'hour-down':
+      offsets.hour = safeCalc(offsets.hour, num, 24);
+      break;
+  }
+
+  function safeCalc(offset, num, max) {
+    const newOffset = offset + num;
+    if(newOffset > max) return newOffset - max
+    else if(newOffset < 0) return max - newOffset
+    return newOffset;
+  }
+
 }
 
-minute.slider.oninput = function() {
-  offset.minute = this.value;
-  minute.text.innerHTML = this.value;
-  updateClock();
-}
-
-hour.slider.oninput = function() {
-  offset.hour = this.value;
-  hour.text.innerHTML = this.value;
-  updateClock();
-}
 
 const tick = async () => {
   updateClock();
@@ -72,9 +83,9 @@ const tick = async () => {
 function updateClock() {
   const time = new Date();
 
-  let secondRotation = (time.getSeconds() * ROTATION_INCREMENT) + (offset.second * ROTATION_INCREMENT) + offset.base
-  let minuteRotation = (time.getMinutes() * ROTATION_INCREMENT) + (offset.minute * ROTATION_INCREMENT)  + offset.base
-  let hourRotation = (time.getHours() * (60 / 12) * ROTATION_INCREMENT) + (offset.hour * ((60 / 12) * ROTATION_INCREMENT))  + offset.base
+  let secondRotation = (time.getSeconds() * ROTATION_INCREMENT) + (offsets.second * ROTATION_INCREMENT) + offsets.base
+  let minuteRotation = (time.getMinutes() * ROTATION_INCREMENT) + (offsets.minute * ROTATION_INCREMENT)  + offsets.base
+  let hourRotation = (time.getHours() * (60 / 12) * ROTATION_INCREMENT) + (offsets.hour * ((60 / 12) * ROTATION_INCREMENT))  + offsets.base
 
   hour.hand.setAttribute("transform", "rotate(" + hourRotation + " 380 380)");
   minute.hand.setAttribute("transform", "rotate(" + minuteRotation + " 380 380)");
@@ -83,15 +94,17 @@ function updateClock() {
   document.getElementById("digital-clock").innerHTML = convertToDigitalTime(new Date());
 
   unixText.innerHTML = time.getTime() +
-    (offset.second * 1000) + (offset.minute * 60 * 1000) + (offset.hour * 60 * 60 * 1000)
+    (offsets.second * 1000) + (offsets.minute * 60 * 1000) + (offsets.hour * 60 * 60 * 1000)
 }
 
-const flash = async (visible) => {
-  document.getElementById("command-input").setAttribute("opacity", (visible) ? 1 : 0);
+const flash = async (visible, repeat, elementId) => {
+  document.getElementById(elementId).setAttribute("opacity", (visible) ? 1 : 0);
 
-  await sleep(1000);
-  flash(!visible);
+  await sleep(300);
+
+
+  if (!visible || repeat) flash(!visible, repeat, elementId);
 }
 
 tick();
-flash(true);
+// flash(false, true, 'terminal-text');

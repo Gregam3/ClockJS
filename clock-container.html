@@ -42,36 +42,44 @@
     <!-- Control Panel  -->
     <rect x="600" y="200" width="300" height="350" style="fill:rgb(255,255,255); stroke:#000; stroke-width: 3"/>
 
-    <polygon points="850, 234 865, 210 880, 234"/>
-    <polygon points="850, 274 865, 250 880, 274"/>
+    <text x=730 y=245 fill="black" >Second Offset</text>
+    <polygon id="second-up" points="850, 234 865, 210 880, 234" onClick="changeOffset('second-up', 1)")/>
+    <polygon id="second-down" points="850, 244 865, 270 880, 244" onClick="changeOffset('second-down', -1)")/>
 
+    <text x=730 y=315 fill="black" >Minute Offset</text>
+    <polygon id="minute-up" points="850, 304 865, 280 880, 304" onClick="changeOffset('minute-up', 1)"/>
+    <polygon id="minute-down" points="850, 314 865, 340 880, 314" onClick="changeOffset('minute-down', -1)"/>
 
-     <!-- Clock face -->
-     <circle id="face" cx="390" cy="380" r="340"  style="fill:rgb(255,255,255); stroke:#000;"/>
+    <text x=730 y=385 fill="black" >Hour Offset</text>
+    <polygon id="hour-up" points="850, 374 865, 350 880, 374" onClick="changeOffset('hour-up', 1)"/>
+    <polygon id="hour-down" points="850, 384 865, 410 880, 384" onClick="changeOffset('hour-down', -1)"/>
 
-     <!-- Clock numbers : could add with JS loop but would be just as finicky  -->
-     <text x="360" y="80" class="clock-number-primary">12</text>
-     <text x="520" y="130" class="clock-number-secondary">1</text>
-     <text x="630" y="240" class="clock-number-secondary">2</text>
-     <text x="680" y="380" class="clock-number-primary">3</text>
-     <text x="630" y="530" class="clock-number-secondary">4</text>
-     <text x="530" y="620" class="clock-number-secondary">5</text>
-     <text x="360" y="670"class="clock-number-primary">6</text>
-     <text x="270" y="620" class="clock-number-secondary">7</text>
-     <text x="150" y="520" class="clock-number-secondary">8</text>
-     <text x="80" y="380" class="clock-number-primary">9</text>
-     <text x="130" y="220" class="clock-number-secondary">10</text>
-     <text x="250" y="140" class="clock-number-secondary">11</text>
+    <!-- Clock face -->
+    <circle id="face" cx="390" cy="380" r="340"  style="fill:rgb(255,255,255); stroke:#000;"/>
 
-     <<!-- Digital Clock -->
-     <rect x="300" y="200" width="200" height="60" rx=40 ry=40 style="fill:rgb(0,0,0);"/>
-     <text id="digital-clock" class="digital-clock-text" x="320" y="230" fill="red">16:03:54</text>
-     <text id="unix-time" class="terminal-text" x="320" y="250" fill="#fff"></text>
+    <!-- Clock numbers : could add with JS loop but would be just as finicky  -->
+    <text x="360" y="80" class="clock-number-primary">12</text>
+    <text x="520" y="130" class="clock-number-secondary">1</text>
+    <text x="630" y="240" class="clock-number-secondary">2</text>
+    <text x="680" y="380" class="clock-number-primary">3</text>
+    <text x="630" y="530" class="clock-number-secondary">4</text>
+    <text x="530" y="620" class="clock-number-secondary">5</text>
+    <text x="360" y="670"class="clock-number-primary">6</text>
+    <text x="270" y="620" class="clock-number-secondary">7</text>
+    <text x="150" y="520" class="clock-number-secondary">8</text>
+    <text x="80" y="380" class="clock-number-primary">9</text>
+    <text x="130" y="220" class="clock-number-secondary">10</text>
+    <text x="250" y="140" class="clock-number-secondary">11</text>
 
-     <!-- Hands-->
-     <rect id="hour-hand" x="370" y="340" width="40" height="200" rx=20 ry=20 style="fill:rgb(0,0,0);stroke:white"/>
-     <rect id="minute-hand" x="370" y="340" width="26" height="260" rx=20  style="fill:rgb(0,0,0);stroke:white"/>
-     <rect id="second-hand" x="370" y="340" width="16" height="320" rx=20 style="fill:rgb(255,0,0);"/>
+    <<!-- Digital Clock -->
+    <rect x="300" y="200" width="200" height="60" rx=40 ry=40 style="fill:rgb(0,0,0);"/>
+    <text id="digital-clock" class="digital-clock-text" x="320" y="230" fill="red">16:03:54</text>
+    <text id="unix-time" class="terminal-text" x="320" y="250" fill="#fff"></text>
+
+    <!-- Hands-->
+    <rect id="hour-hand" x="370" y="340" width="40" height="200" rx=20 ry=20 style="fill:rgb(0,0,0);stroke:white"/>
+    <rect id="minute-hand" x="370" y="340" width="26" height="260" rx=20  style="fill:rgb(0,0,0);stroke:white"/>
+    <rect id="second-hand" x="370" y="340" width="16" height="320" rx=20 style="fill:rgb(255,0,0);"/>
   </svg>
 
   <br>
