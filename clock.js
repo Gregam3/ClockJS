@@ -28,6 +28,9 @@ const unixText = document.getElementById("unix-time");
 
 let offsets = {};
 
+let stopwatchOn = false;
+let startTimeMs = new Date().getTime();
+
 function resetOffsets() {
   offsets = {
     second: 0,
@@ -46,16 +49,20 @@ function sleep(ms) {
 }
 
 function convertToDigitalTime(date) {
+  console.log(date, offsets);
+
   return formatTime(date.getHours(), offsets.hour, 24) + ':'
   + formatTime(date.getMinutes(), offsets.minute, 60) + ':'
   + formatTime(date.getSeconds(), offsets.second, 60);
 }
 
-function formatTime(num, offsets, max) {
-  num = num + parseInt(offsets)
+function formatTime(num, offset, max) {
+  console.log(num + parseInt(offsets), offset, max);
 
-  if(num < 10) return '0' + num
-  else if (num >= max) return formatTime(num - max, 0)
+  num = (offset) ?  num + parseInt(offsets) : num;
+
+  if(num < 10) return '0' + num;
+  else if (num >= max) return formatTime(num - max, 0);
   return num;
 }
 
@@ -110,8 +117,26 @@ function updateClock() {
 
   document.getElementById("digital-clock").innerHTML = convertToDigitalTime(new Date());
 
+  document.getElementById("date").innerHTML = formatTime(time.getDate()) + "&nbsp;&nbsp;" + formatTime(time.getMonth() + 1) + "&nbsp;&nbsp;" + time.getFullYear()
+
   unixText.innerHTML = time.getTime() +
-    (offsets.second * 1000) + (offsets.minute * 60 * 1000) + (offsets.hour * 60 * 60 * 1000)
+    (offsets.second * 1000) + (offsets.minute * 60 * 1000) + (offsets.hour * 60 * 60 * 1000);
+
+  if(stopwatchOn) document.getElementById("stopwatch").innerHTML = formatTimeDiscrepency(time.getTime() - startTimeMs);
+
+  function formatTimeDiscrepency(elapsedTimeMs) {
+    let stopwatchText = "";
+
+    const minuteInMs = 1000 * 60;
+
+    const minutes = (elapsedTimeMs / minuteInMs).toFixed(0);
+    elapsedTimeMs = elapsedTimeMs - (minutes * minutesInMs);
+
+    const seconds = (elapsedTimeMs / 1000).toFixed(0);
+    elapsedTimeMs = elapsedTimeMs - (minutes * 1000);
+
+    return minutes + ":" + seconds + ":" + elapsedTimeMs;
+  }
 }
 
 const flash = async (visible, repeat, elementId) => {
@@ -119,8 +144,12 @@ const flash = async (visible, repeat, elementId) => {
 
   await sleep(300);
 
-
   if (!visible || repeat) flash(!visible, repeat, elementId);
+}
+
+function stopwatchChangeState(newState) {
+  if(start) startTimeMs = new Date().getTime();
+  stopwatchOn = newState;
 }
 
 tick();

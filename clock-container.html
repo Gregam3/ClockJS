@@ -11,6 +11,9 @@
 <body>
   <svg height="800" width="900">
     <style>
+      * {
+        user-select: none;
+      }
       .clock-number-primary {
          font-size: 50px;
          font-family: Georgia, serif;
@@ -24,13 +27,9 @@
       .offset-text {
         font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
         font-size: 15px;
+        font-weight:bold;
       }
 
-      .digital-clock-text-small {
-        font-family: 'Orbitron', sans-serif;
-        font-size: 25px;
-        font-weight: bold;
-      }
 
       .digital-clock-text {
         font-family: 'Orbitron', sans-serif;
@@ -44,9 +43,18 @@
         font-weight: bold;
       }
 
+      .date-text {
+        font-size: 25px;
+        font-family: 'Orbitron', sans-serif;
+      }
+
+      .stopwatch-text {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 22px;
+      }
+
       .clickable {
         cursor:pointer;
-        user-select: none;
       }
    </style>
     <!-- Control Panel  -->
@@ -80,21 +88,36 @@
     <text x="630" y="240" class="clock-number-secondary">2</text>
     <text x="680" y="380" class="clock-number-primary">3</text>
     <text x="630" y="530" class="clock-number-secondary">4</text>
-    <text x="530" y="620" class="clock-number-secondary">5</text>
+    <text x="520" y="630" class="clock-number-secondary">5</text>
     <text x="360" y="670"class="clock-number-primary">6</text>
-    <text x="270" y="620" class="clock-number-secondary">7</text>
-    <text x="150" y="520" class="clock-number-secondary">8</text>
+    <text x="240" y="620" class="clock-number-secondary">7</text>
+    <text x="130" y="520" class="clock-number-secondary">8</text>
     <text x="80" y="380" class="clock-number-primary">9</text>
-    <text x="130" y="220" class="clock-number-secondary">10</text>
-    <text x="250" y="140" class="clock-number-secondary">11</text>
+    <text x="120" y="240" class="clock-number-secondary">10</text>
+    <text x="220" y="140" class="clock-number-secondary">11</text>
 
     <<!-- Digital Clock -->
     <rect x="300" y="200" width="200" height="60" rx=40 ry=40 style="fill:rgb(0,0,0);"/>
-    <text id="digital-clock" class="digital-clock-text" x="320" y="230" fill="red">16:03:54</text>
+    <text id="digital-clock" class="digital-clock-text" x="320" y="230" fill=red>16:03:54</text>
 
     <!-- Unix time -->
-    <text id="unix-time" class="terminal-text" x="320" y="250" fill="#fff">Unix</text>
-    <text id="unix-time" class="terminal-text" x="320" y="250" fill="#fff"></text>
+    <text class="terminal-text" x="320" y="250" fill=white>Unix:</text>
+    <text id="unix-time" class="terminal-text" x="360" y="250" fill="#fff"></text>
+
+    <!-- Date -->
+    <rect x="295" y="505" width="40" height="30" style="fill:rgb(0,0,0);"/>
+    <rect x="340" y="505" width="50" height="30" style="fill:rgb(0,0,0);"/>
+    <rect x="395" y="505" width="80" height="30" style="fill:rgb(0,0,0);"/>
+    <text class="date-text" id="date" x="300" y="530" fill=white>14/03/1996</text>
+
+    <!-- Stopwatch -->
+    <rect x="500" y="360" width="130" height="30" style="fill:none; stroke:black"/>
+    <text class="clickable" x="510" y="405" fill=black onClick="stopwatchChangeState(true)">Start</text>
+    <rect x="500" y="390" width="65" height="20" style="fill:none; stroke:black"/>
+    <text class="clickable" x="570" y="405" fill=black onClick="stopwatchChangeState(false)">Stop</text>
+    <rect x="565" y="390" width="65" height="20" style="fill:none; stroke:black"/>
+    <text id="stopwatch" class="stopwatch-text" x="505" y="385" fill=black>00:00:00</text>
+
 
     <!-- Hands-->
     <rect id="hour-hand" x="370" y="340" width="40" height="200" rx=20 ry=20 style="fill:rgb(0,0,0);stroke:white"/>
