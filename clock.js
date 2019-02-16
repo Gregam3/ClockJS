@@ -49,17 +49,13 @@ function sleep(ms) {
 }
 
 function convertToDigitalTime(date) {
-  console.log(date, offsets);
-
   return formatTime(date.getHours(), offsets.hour, 24) + ':'
   + formatTime(date.getMinutes(), offsets.minute, 60) + ':'
   + formatTime(date.getSeconds(), offsets.second, 60);
 }
 
 function formatTime(num, offset, max) {
-  console.log(num + parseInt(offsets), offset, max);
-
-  num = (offset) ?  num + parseInt(offsets) : num;
+  num = (offset) ? num + parseInt(offset) : num
 
   if(num < 10) return '0' + num;
   else if (num >= max) return formatTime(num - max, 0);
@@ -125,17 +121,18 @@ function updateClock() {
   if(stopwatchOn) document.getElementById("stopwatch").innerHTML = formatTimeDiscrepency(time.getTime() - startTimeMs);
 
   function formatTimeDiscrepency(elapsedTimeMs) {
-    let stopwatchText = "";
-
     const minuteInMs = 1000 * 60;
 
-    const minutes = (elapsedTimeMs / minuteInMs).toFixed(0);
-    elapsedTimeMs = elapsedTimeMs - (minutes * minutesInMs);
+    //Reset timer if it goes on for too long,
+    if(elapsedTimeMs > minuteInMs * 99) elapsedTimeMs = 0;
 
-    const seconds = (elapsedTimeMs / 1000).toFixed(0);
-    elapsedTimeMs = elapsedTimeMs - (minutes * 1000);
+    const minutes = Math.floor(elapsedTimeMs / minuteInMs);
+    elapsedTimeMs = elapsedTimeMs - (minutes * minuteInMs);
 
-    return minutes + ":" + seconds + ":" + elapsedTimeMs;
+    const seconds = Math.floor(elapsedTimeMs / 1000);
+    elapsedTimeMs = elapsedTimeMs - (seconds * 1000);
+
+    return formatTime(minutes, 0, 60) + ":" + formatTime(seconds, 0, 60) + ":" + elapsedTimeMs;
   }
 }
 
@@ -148,7 +145,7 @@ const flash = async (visible, repeat, elementId) => {
 }
 
 function stopwatchChangeState(newState) {
-  if(start) startTimeMs = new Date().getTime();
+  if(newState) startTimeMs = new Date().getTime();
   stopwatchOn = newState;
 }
 
