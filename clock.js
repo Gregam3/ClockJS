@@ -113,7 +113,7 @@ function updateClock() {
 
   document.getElementById("digital-clock").innerHTML = convertToDigitalTime(new Date());
 
-  document.getElementById("date").innerHTML = formatTime(time.getDate()) + "&nbsp;&nbsp;" + formatTime(time.getMonth() + 1) + "&nbsp;&nbsp;" + time.getFullYear()
+  document.getElementById("date").innerHTML = formatTime(time.getDate()) + "&nbsp;&nbsp;&nbsp;" + formatTime(time.getMonth() + 1) + "&nbsp;&nbsp;&nbsp;" + time.getFullYear()
 
   unixText.innerHTML = time.getTime() +
     (offsets.second * 1000) + (offsets.minute * 60 * 1000) + (offsets.hour * 60 * 60 * 1000);
