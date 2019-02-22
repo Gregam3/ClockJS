@@ -48,15 +48,7 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function convertToDigitalTime(date) {
-  return formatTime(date.getHours(), offsets.hour, 24) + ':'
-  + formatTime(date.getMinutes(), offsets.minute, 60) + ':'
-  + formatTime(date.getSeconds(), offsets.second, 60);
-}
-
-function formatTime(num, offset, max) {
-  num = (offset) ? num + parseInt(offset) : num
-
+function formatTime(num, max) {
   if(num < 10) return '0' + num;
   else if (num >= max) return formatTime(num - max, 0);
   return num;
@@ -69,28 +61,20 @@ function changeOffset(elementId, num) {
   switch (elementId) {
     case 'second-up':
     case 'second-down':
-      offsets.second = safeCalc(offsets.second, num, 60);
+      offsets.second += num;
       offsetText.second.innerHTML = offsets.second;
       break;
     case 'minute-up':
     case 'minute-down':
-      offsets.minute = safeCalc(offsets.minute, num, 60);
+      offsets.minute += num;
       offsetText.minute.innerHTML = offsets.minute;
       break;
     case 'hour-up':
     case 'hour-down':
-      offsets.hour = safeCalc(offsets.hour, num, 24);
+      offsets.hour += num;
       offsetText.hour.innerHTML = offsets.hour;
       break;
   }
-
-  function safeCalc(offset, num, max) {
-    const newOffset = offset + num;
-    if(newOffset >= max) return newOffset - max
-    else if(newOffset < 0) return max + newOffset
-    return newOffset;
-  }
-
 }
 
 
@@ -101,17 +85,19 @@ const tick = async () => {
 }
 
 function updateClock() {
-  const time = new Date();
+  const time = new Date(new Date().getTime() + calculateTotalOffsetInMs())
 
-  let secondRotation = (time.getSeconds() * ROTATION_INCREMENT) + (offsets.second * ROTATION_INCREMENT) + offsets.base
-  let minuteRotation = (time.getMinutes() * ROTATION_INCREMENT) + (offsets.minute * ROTATION_INCREMENT)  + offsets.base
-  let hourRotation = (time.getHours() * (60 / 12) * ROTATION_INCREMENT) + (offsets.hour * ((60 / 12) * ROTATION_INCREMENT))  + offsets.base
+  console.log(time)
+
+  let secondRotation = (time.getSeconds() * ROTATION_INCREMENT) + offsets.base
+  let minuteRotation = (time.getMinutes() * ROTATION_INCREMENT) + offsets.base
+  let hourRotation = (time.getHours() * (60 / 12) * ROTATION_INCREMENT) + offsets.base
 
   hour.hand.setAttribute("transform", "rotate(" + hourRotation + " 380 380)");
   minute.hand.setAttribute("transform", "rotate(" + minuteRotation + " 380 380)");
   second.hand.setAttribute("transform", "rotate(" + secondRotation + " 380 380)");
 
-  document.getElementById("digital-clock").innerHTML = convertToDigitalTime(new Date());
+  document.getElementById("digital-clock").innerHTML = convertToDigitalTime(time);
 
   document.getElementById("date").innerHTML = formatTime(time.getDate()) + "&nbsp;&nbsp;&nbsp;" + formatTime(time.getMonth() + 1) + "&nbsp;&nbsp;&nbsp;" + time.getFullYear()
 
@@ -135,14 +121,24 @@ function updateClock() {
     return formatTime(minutes, 0, 60) + ":" + formatTime(seconds, 0, 60) + ":" + elapsedTimeMs;
   }
 
-  console.log('Millsecond discrepency : ' + (new Date().getTime() - time.getTime()) + 'ms')
+  function calculateTotalOffsetInMs() {
+    return (offsets.hour * 60 * 60 * 1000) +
+      (offsets.minute * 60 * 1000) +
+      (offsets.second * 1000);
+  }
+
+  function convertToDigitalTime(date) {
+    return formatTime(date.getHours(), 24) + ':'
+    + formatTime(date.getMinutes(), 60) + ':'
+    + formatTime(date.getSeconds(), 60);
+  }
+
+  // console.log('Millsecond discrepency : ' + (new Date().getTime() - time.getTime()) + 'ms')
 }
 
 const flash = async (visible, repeat, elementId) => {
-  document.getElementById(elementId).setAttribute("opacity", (visible) ? 1 : 0);
-
+  document.getElementById(elementId).setAttribute("opacity", visible + 0);
   await sleep(300);
-
   if (!visible || repeat) flash(!visible, repeat, elementId);
 }
 
