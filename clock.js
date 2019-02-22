@@ -49,9 +49,8 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function formatTime(num, max) {
+function formatTime(num) {
   if(num < 10) return '0' + num;
-  else if (num >= max) return formatTime(num - max, 0);
   return num;
 }
 
@@ -81,7 +80,9 @@ function changeOffset(elementId, num) {
 
 const tick = async () => {
   updateClock();
-  await sleep(5);
+
+  //Kept at 50 to avoid exceeding Maximum call stack size
+  await sleep(1);
   tick();
 }
 
@@ -119,7 +120,7 @@ function updateClock() {
     const seconds = Math.floor(elapsedTimeMs / 1000);
     elapsedTimeMs = elapsedTimeMs - (seconds * 1000);
 
-    return formatTime(minutes, 0, 60) + ":" + formatTime(seconds, 0, 60) + ":" + elapsedTimeMs;
+    return formatTime(minutes) + ":" + formatTime(seconds) + ":" + elapsedTimeMs;
   }
 
   function calculateTotalOffsetInMs() {
@@ -129,9 +130,9 @@ function updateClock() {
   }
 
   function convertToDigitalTime(date) {
-    return formatTime(date.getHours(), 24) + ':'
-    + formatTime(date.getMinutes(), 60) + ':'
-    + formatTime(date.getSeconds(), 60);
+    return formatTime(date.getHours()) + ':'
+    + formatTime(date.getMinutes()) + ':'
+    + formatTime(date.getSeconds());
   }
 
   // console.log('Millsecond discrepency : ' + (new Date().getTime() - time.getTime()) + 'ms')
