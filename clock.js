@@ -96,7 +96,7 @@ function changeOffset(elementId, num) {
 
 const tick = async () => {
   updateClock();
-  await sleep(100);
+  await sleep(1);
   tick();
 }
 
@@ -134,6 +134,8 @@ function updateClock() {
 
     return formatTime(minutes, 0, 60) + ":" + formatTime(seconds, 0, 60) + ":" + elapsedTimeMs;
   }
+
+  console.log('Millsecond discrepency : ' + (new Date().getTime() - time.getTime()) + 'ms')
 }
 
 const flash = async (visible, repeat, elementId) => {
