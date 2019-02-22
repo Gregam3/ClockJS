@@ -54,6 +54,12 @@
         font-size: 22px;
       }
 
+      .stopwatch-control {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 22px;
+        font-weight:bold
+      }
+
       .clickable {
         cursor:pointer;
       }
@@ -106,18 +112,19 @@
     <text id="unix-time" class="terminal-text" x="360" y="250" fill="#fff"></text>
 
     <!-- Date -->
-    <rect x="295" y="505" width="40" height="30" style="fill:rgb(0,0,0);"/>
-    <rect x="342" y="505" width="50" height="30" style="fill:rgb(0,0,0);"/>
-    <rect x="405" y="505" width="80" height="30" style="fill:rgb(0,0,0);"/>
-    <text class="date-text" id="date" x="300" y="530" fill=white>14/03/1996</text>
+    <rect x="285" y="505" width="50" height="30" style="fill:rgb(0,0,0);"/>
+    <rect x="347" y="505" width="50" height="30" style="fill:rgb(0,0,0);"/>
+    <rect x="410" y="505" width="80" height="30" style="fill:rgb(0,0,0);"/>
+    <text class="date-text" id="date" x="290" y="530" fill=white>14/03/1996</text>
 
     <!-- Stopwatch -->
     <rect x="500" y="360" width="150" height="30" style="fill:none; stroke:black"/>
-    <text class="clickable" x="510" y="405" fill=black onClick="stopwatchChangeState(true)">Start</text>
-    <rect x="500" y="390" width="70" height="20" style="fill:none; stroke:black"/>
-    <text class="clickable" x="585" y="405" fill=black onClick="stopwatchChangeState(false)">Stop</text>
-    <rect x="580" y="390" width="70" height="20" style="fill:none; stroke:black"/>
+    <text id='start-button' class="clickable stopwatch-control" x="505" y="415" fill=black onClick="stopwatchChangeState(true)">Start</text>
+    <rect x="500" y="390" width="70" height="30" style="fill:none; stroke:black"/>
+    <text id='stop-button' class="clickable stopwatch-control" x="590" y="415" fill=black onClick="stopwatchChangeState(false)">Stop</text>
+    <rect x="580" y="390" width="70" height="30" style="fill:none; stroke:black"/>
     <text id="stopwatch" class="stopwatch-text" x="505" y="385" fill=black>00:00:00</text>
+    <rect x="570" y="390" width="10" height="30" style="fill:black; stroke:black"/>
 
 
     <!-- Hands-->

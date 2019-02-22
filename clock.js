@@ -29,7 +29,8 @@ const unixText = document.getElementById("unix-time");
 let offsets = {};
 
 let stopwatchOn = false;
-let startTimeMs = new Date().getTime();
+let startTimeMs = 0;
+let stoppedAtUnix = 0;
 
 function resetOffsets() {
   offsets = {
@@ -80,7 +81,7 @@ function changeOffset(elementId, num) {
 
 const tick = async () => {
   updateClock();
-  await sleep(1);
+  await sleep(5);
   tick();
 }
 
@@ -104,7 +105,7 @@ function updateClock() {
   unixText.innerHTML = time.getTime() +
     (offsets.second * 1000) + (offsets.minute * 60 * 1000) + (offsets.hour * 60 * 60 * 1000);
 
-  if(stopwatchOn) document.getElementById("stopwatch").innerHTML = formatTimeDiscrepency(time.getTime() - startTimeMs);
+  if(stopwatchOn) document.getElementById("stopwatch").innerHTML = formatTimeDiscrepency(new Date().getTime() - startTimeMs);
 
   function formatTimeDiscrepency(elapsedTimeMs) {
     const minuteInMs = 1000 * 60;
@@ -145,7 +146,8 @@ const flash = async (visible, repeat, elementId) => {
 function stopwatchChangeState(newState) {
   if(newState) startTimeMs = new Date().getTime();
   stopwatchOn = newState;
+
+  flash(false, false, ((newState) ? 'start' : 'stop' ) + '-button')
 }
 
 tick();
-// flash(false, true, 'terminal-text');
