@@ -81,7 +81,6 @@ function changeOffset(elementId, num) {
 const tick = async () => {
   updateClock();
 
-  //Kept at 50 to avoid exceeding Maximum call stack size
   await sleep(1);
   tick();
 }
@@ -105,6 +104,8 @@ function updateClock() {
 
   unixText.innerHTML = time.getTime() +
     (offsets.second * 1000) + (offsets.minute * 60 * 1000) + (offsets.hour * 60 * 60 * 1000);
+
+  document.getElementById("time-period").innerHTML = (time.getHours() > 11) ? "PM" : "AM";
 
   if(stopwatchOn) document.getElementById("stopwatch").innerHTML = formatTimeDiscrepency(new Date().getTime() - startTimeMs);
 

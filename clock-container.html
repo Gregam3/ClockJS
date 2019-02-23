@@ -52,6 +52,7 @@
       .stopwatch-text {
         font-family: 'Orbitron', sans-serif;
         font-size: 22px;
+        font-weight:bold
       }
 
       .stopwatch-control {
@@ -118,13 +119,16 @@
     <text class="date-text" id="date" x="290" y="530" fill=white>14/03/1996</text>
 
     <!-- Stopwatch -->
-    <rect x="500" y="360" width="150" height="30" style="fill:none; stroke:black"/>
+    <rect x="500" y="360" width="150" height="30" style="fill:black; stroke:black"/>
     <text id='start-button' class="clickable stopwatch-control" x="505" y="415" fill=black onClick="stopwatchChangeState(true)">Start</text>
     <rect x="500" y="390" width="70" height="30" style="fill:none; stroke:black"/>
     <text id='stop-button' class="clickable stopwatch-control" x="590" y="415" fill=black onClick="stopwatchChangeState(false)">Stop</text>
     <rect x="580" y="390" width="70" height="30" style="fill:none; stroke:black"/>
-    <text id="stopwatch" class="stopwatch-text" x="505" y="385" fill=black>00:00:00</text>
-    <rect x="570" y="390" width="10" height="30" style="fill:black; stroke:black"/>
+    <text id="stopwatch" class="stopwatch-text" x="505" y="385" fill=white>00:00:00</text>
+
+
+    <!-- AM/PM -->
+    <text id="time-period" class="stopwatch-text" x="205" y="380" fill=black></text>
 
 
     <!-- Hands-->
