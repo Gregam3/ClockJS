@@ -113,9 +113,13 @@
     <text id="unix-time" class="terminal-text" x="360" y="250" fill="#fff"></text>
 
     <!-- Date -->
-    <rect x="285" y="505" width="50" height="30" style="fill:rgb(0,0,0);"/>
-    <rect x="347" y="505" width="50" height="30" style="fill:rgb(0,0,0);"/>
-    <rect x="410" y="505" width="80" height="30" style="fill:rgb(0,0,0);"/>
+    <polygon id="day-up" class="clickable" points="285, 500 335, 500 310, 470" onClick="changeOffset('day-up', 1)"/>
+    <polygon id="day-down" class="clickable" points="285, 540 335, 540 310, 570" onClick="changeOffset('day-down', -1)"/>
+    <polygon id="month-up" class="clickable" points="400, 500 345, 500 370, 470" onClick="changeOffset('month-up', 1)"/>
+    <polygon id="month-down" class="clickable" points="345, 540 400, 540 370, 570" onClick="changeOffset('month-down', -1)"/>
+    <polygon id="year-up" class="clickable" points="490, 500 400, 500 440, 470" onClick="changeOffset('year-up', 1)"/>
+    <polygon id="year-down" class="clickable" points="400, 540 490, 540 440, 570" onClick="changeOffset('year-down', -1)"/>
+    <rect x="285" y="505" width="210" height="30" style="fill:rgb(0,0,0);"/>
     <text class="date-text" id="date" x="290" y="530" fill=white>14/03/1996</text>
 
     <!-- Stopwatch -->
@@ -129,7 +133,6 @@
 
     <!-- AM/PM -->
     <text id="time-period" class="stopwatch-text" x="205" y="380" fill=black></text>
-
 
     <!-- Hands-->
     <rect id="hour-hand" x="370" y="340" width="40" height="200" rx=20 ry=20 style="fill:rgb(0,0,0);stroke:white"/>

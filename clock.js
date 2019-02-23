@@ -37,6 +37,9 @@ function resetOffsets() {
     second: 0,
     minute: 0,
     hour: 0,
+    day: 0,
+    month: 0,
+    year: 0,
     base: 180
   }
 
@@ -59,20 +62,26 @@ function changeOffset(elementId, num) {
   flash(false, false, elementId);
 
   switch (elementId) {
-    case 'second-up':
-    case 'second-down':
+    case 'second-up': case 'second-down':
       offsets.second += num;
       offsetText.second.innerHTML = offsets.second;
       break;
-    case 'minute-up':
-    case 'minute-down':
+    case 'minute-up': case 'minute-down':
       offsets.minute += num;
       offsetText.minute.innerHTML = offsets.minute;
       break;
-    case 'hour-up':
-    case 'hour-down':
+    case 'hour-up':case 'hour-down':
       offsets.hour += num;
       offsetText.hour.innerHTML = offsets.hour;
+      break;
+    case 'day-up': case 'day-down':
+      offsets.day += num;
+      break;
+    case 'month-up': case 'month-down':
+      offsets.month += num;
+      break;
+    case 'year-up': case 'year-down':
+      offsets.year += num;
       break;
   }
 }
@@ -88,7 +97,7 @@ const tick = async () => {
 function updateClock() {
   const time = new Date(new Date().getTime() + calculateTotalOffsetInMs())
 
-  console.log(time)
+  //console.log(time)
 
   let secondRotation = (time.getSeconds() * ROTATION_INCREMENT) + offsets.base
   let minuteRotation = (time.getMinutes() * ROTATION_INCREMENT) + offsets.base
@@ -125,7 +134,10 @@ function updateClock() {
   }
 
   function calculateTotalOffsetInMs() {
-    return (offsets.hour * 60 * 60 * 1000) +
+    return (offsets.year * 12 * 30 * 24 * 60 * 60 * 1000) +
+      (offsets.month * 30 * 24 * 60 * 60 * 1000) +
+      (offsets.day * 24 * 60 * 60 * 1000) +
+      (offsets.hour * 60 * 60 * 1000) +
       (offsets.minute * 60 * 1000) +
       (offsets.second * 1000);
   }
