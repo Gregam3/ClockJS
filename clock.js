@@ -134,12 +134,16 @@ function updateClock() {
   }
 
   function calculateTotalOffsetInMs() {
-    return (offsets.year * 12 * 30 * 24 * 60 * 60 * 1000) +
-      (offsets.month * 30 * 24 * 60 * 60 * 1000) +
-      (offsets.day * 24 * 60 * 60 * 1000) +
-      (offsets.hour * 60 * 60 * 1000) +
-      (offsets.minute * 60 * 1000) +
-      (offsets.second * 1000);
+    const msPerSecond = 1000; const msPerMinute = msPerSecond * 60; const msPerHour = msPerMinute * 60;
+    const msPerDay = msPerHour * 24; const msPerMonth = msPerDay * 30; const msPerYear = msPerMonth * 12;
+
+
+    return (offsets.year * msPerYear) +
+      (offsets.month * msPerMonth) +
+      (offsets.day * msPerDay) +
+      (offsets.hour * msPerHour) +
+      (offsets.minute * msPerMinute) +
+      (offsets.second * msPerSecond);
   }
 
   function convertToDigitalTime(date) {
