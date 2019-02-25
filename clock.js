@@ -121,16 +121,15 @@ function updateClock() {
 
   if(stopwatchOn) document.getElementById("stopwatch").innerHTML = formatTimeDiscrepency(new Date().getTime() - startTimeMs);
 
-  if(alarmTimes[0] < time.getTime()) {
+  if(alarmTimes[0] < time.getTime())
     //Activates a upto tenth of a second late to avoid missing the exact ms
-    if (alarmTimes[0] > time.getTime() - 100) {
-      window.alert("Ding ding! You're Alarm for " new Date(alarmTimes[0]) + " is going off!")
-    } else {
+    if (alarmTimes[0] > time.getTime() - 100) window.alert("Ding ding! You're Alarm for " +  new Date(alarmTimes[0]) + " is going off!");
+    else {
       let removedAlarms = [];
       while (alarmTimes[0] > time.getTime) removedAlarms.push(new Date(alarmTimes.shift()));
-      window.alert("Due to offset changes the alarms at " removedAlarms " have been removed.");
+      window.alert("Due to offset changes the alarms at " + removedAlarms  + " have been removed.");
     }
-  }
+
 
   function formatTimeDiscrepency(elapsedTimeMs) {
     const minuteInMs = 1000 * 60;
@@ -169,18 +168,24 @@ function updateClock() {
   // console.log('Millsecond discrepency : ' + (new Date().getTime() - time.getTime()) + 'ms')
 }
 
-const setNewAlarm(timeString) {
-  //dd/mm/yyyy - hh:mm:ss
+const alarmPattern = new RegExp('([0-9]{1,2}/[0-9]{1,2}/[0-9]{4}).*?-.*?([0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2})');
+
+const setNewAlarm = function () {
+  const timeString = document.getElementById('alarm-text').value
+
   //2015-03-25T12:10:00Z
+  let alarmTimeUnix = null
 
-  //TODO date formatting
-  if(false /*Invalid*/) window.alert("Invalid date format, must conform to - [dd/mm/yyyy - hh:mm:ss] exactly. e.g. 01/01/1970 - 00:00:00");
-  const alarmTimeUnix = new Date().getTime()
+  if(!alarmPattern.matchesAll(timeString)) window.alert("Invalid date format, must conform to - [dd/mm/yyyy - hh:mm:ss] exactly. e.g. 01/01/1970 - 00:00:00");
+  else {
+    let match = alarmPattern.exec(timeString);
+    alarmTimeUnix = new Date(match[0] + 'T' + match[1] + 'Z').getTime();
 
-  if(time.getTime() > alarmTimeUnix) window.alert("Cannot set alarm in the past!");
+    if(time.getTime() > alarmTimeUnix) window.alert("Cannot set alarm in the past!");
 
-  alarmTimes.push(alarmTimeUnix);
-  alarmTimes.sort();
+    alarmTimes.push(alarmTimeUnix);
+    alarmTimes.sort();
+  }
 }
 
 const flash = async (visible, repeat, elementId) => {
