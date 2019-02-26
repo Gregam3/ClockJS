@@ -97,6 +97,8 @@ const tick = async () => {
   tick();
 }
 
+let configuringAlarm = false;
+
 function updateClock() {
   time = new Date(new Date().getTime() + calculateTotalOffsetInMs())
 
@@ -121,14 +123,27 @@ function updateClock() {
 
   if(stopwatchOn) document.getElementById("stopwatch").innerHTML = formatTimeDiscrepency(new Date().getTime() - startTimeMs);
 
-  if(alarmTimes[0] < time.getTime())
+
+
+  if(alarmTimes && !configuringAlarm && alarmTimes[0] < time.getTime()) {
     //Activates a upto tenth of a second late to avoid missing the exact ms
-    if (alarmTimes[0] > time.getTime() - 100) window.alert("Ding ding! You're Alarm for " +  new Date(alarmTimes[0]) + " is going off!");
+    if (alarmTimes[0] > time.getTime() - 100){
+      //Removes alarm to prevent additional dialogs
+      alarmTimes.shift();
+      window.alert("Ding ding! You're Alarm for " +  new Date(alarmTimes[0]) + " is going off!");
+    }
     else {
       let removedAlarms = [];
-      while (alarmTimes[0] > time.getTime) removedAlarms.push(new Date(alarmTimes.shift()));
-      window.alert("Due to offset changes the alarms at " + removedAlarms  + " have been removed.");
+
+      while (alarmTimes[0] < time.getTime()) {
+        removedAlarms.push(new Date(alarmTimes.shift()));
+        console.log(alarmTimes);
+      }
+
+      window.alert("Due to an offset change making the alarm(s) appear in the past, the alarm(s) at " + removedAlarms  + " have been removed.");
+      let configuringAlarm = false;
     }
+  }
 
 
   function formatTimeDiscrepency(elapsedTimeMs) {
@@ -168,23 +183,33 @@ function updateClock() {
   // console.log('Millsecond discrepency : ' + (new Date().getTime() - time.getTime()) + 'ms')
 }
 
-const alarmPattern = new RegExp('([0-9]{1,2}/[0-9]{1,2}/[0-9]{4}).*?-.*?([0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2})');
+const alarmPattern = new RegExp('([0-9]{4}-[0-3][0-9]-[0-3][0-9]).*?-.*?([0-2][0-9]:[0-5][0-9]:[0-5][0-9])');
+
 
 const setNewAlarm = function () {
-  const timeString = document.getElementById('alarm-text').value
+  const timeString = document.getElementById('alarm-text').value;
+
+  flash(false, false, 'alarm-button');
 
   //2015-03-25T12:10:00Z
   let alarmTimeUnix = null
 
-  if(!alarmPattern.matchesAll(timeString)) window.alert("Invalid date format, must conform to - [dd/mm/yyyy - hh:mm:ss] exactly. e.g. 01/01/1970 - 00:00:00");
+  if(!timeString.match(alarmPattern)) window.alert("Invalid date format, must conform to - " +
+  "[yyyy-mm-dd - hh:mm:ss] exactly. e.g. 1970-01-01 - 00:00:00, all 1 digit numbers must have 0's in front of them.");
   else {
     let match = alarmPattern.exec(timeString);
-    alarmTimeUnix = new Date(match[0] + 'T' + match[1] + 'Z').getTime();
 
-    if(time.getTime() > alarmTimeUnix) window.alert("Cannot set alarm in the past!");
+    console.log(match[1] + 'T' + match[1] + 'Z');
+    alarmTimeUnix = new Date(match[1] + 'T' + match[2] + 'Z').getTime();
 
-    alarmTimes.push(alarmTimeUnix);
-    alarmTimes.sort();
+    if(time.getTime() > alarmTimeUnix) {
+      window.alert("Cannot set alarm in the past! Change Offsets to set this alarm.");
+    } else {
+      alarmTimes.push(alarmTimeUnix);
+      alarmTimes.sort();
+
+      window.alert("New alarm set for " + new Date(alarmTimeUnix));
+    }
   }
 }
 
