@@ -63,6 +63,13 @@ function formatTime(num) {
   return num;
 }
 
+function timezoneOffset(hourOffset) {
+  resetOffsets();
+
+  offsets.hour = hourOffset;
+  offsetText.hour.innerHTML = offsets.hour;
+}
+
 function changeOffset(elementId, num) {
   console.log('changing offset', num, offsets);
   flash(false, false, elementId);

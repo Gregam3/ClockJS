@@ -59,6 +59,12 @@
         font-weight:bold
       }
 
+      .timezone-text {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 18px;
+        font-weight:bold
+      }
+
       .stopwatch-control {
         font-family: 'Orbitron', sans-serif;
         font-size: 22px;
@@ -130,6 +136,11 @@
     <rect x="285" y="505" width="210" height="30" style="fill:rgb(0,0,0);"/>
     <text class="date-text" id="date" x="290" y="530" fill=white>14/03/1996</text>
 
+    <text class="timezone-text clickable" id="date" x="685" y="180" fill=black onClick=timezoneOffset(0)>GMT</text>
+    <text class="timezone-text clickable" id="date" x="745" y="180" fill=black onClick=timezoneOffset(1)>CET</text>
+    <text class="timezone-text clickable" id="date" x="795" y="180" fill=black onClick=timezoneOffset(-5)>EST</text>
+    <text class="timezone-text clickable" id="date" x="845" y="180" fill=black onClick=timezoneOffset(9)>JST</text>
+
     <!-- Stopwatch -->
     <rect x="500" y="360" width="150" height="30" style="fill:black; stroke:black"/>
     <text id='start-button' class="clickable stopwatch-control" x="505" y="415" fill=black onClick="stopwatchChangeState(true)">Start</text>
@@ -150,10 +161,8 @@
           <input id="alarm-text" placeholder="2019-12-03 - 08:53:00" style="font-size: 14px; width: 150px"/>
     </foreignObject>
 
-
     <rect x="730" y="512" width="153" height="25" style="fill:none; stroke:black"/>
     <text id='alarm-button' class="clickable stopwatch-control" x="743" y="533" fill=black onClick="setNewAlarm()">Set Alarm</text>
-
     <!-- Hands-->
     <rect id="hour-hand" x="370" y="340" width="40" height="200" rx=20 ry=20 style="fill:rgb(0,0,0);stroke:white"/>
     <rect id="minute-hand" x="370" y="340" width="26" height="260" rx=20  style="fill:rgb(0,0,0);stroke:white"/>
