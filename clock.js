@@ -1,5 +1,8 @@
 const ROTATION_INCREMENT = 360 / 60;
 
+const msPerSecond = 1000; const msPerMinute = msPerSecond * 60; const msPerHour = msPerMinute * 60;
+const msPerDay = msPerHour * 24; const msPerMonth = msPerDay * 30; const msPerYear = msPerMonth * 12;
+
 const hour = {
   hand: document.getElementById("hour-hand"),
   slider:  document.getElementById("hour-slider"),
@@ -117,7 +120,7 @@ function updateClock() {
   document.getElementById("date").innerHTML = formatTime(time.getDate()) + "&nbsp;&nbsp;&nbsp;" + formatTime(time.getMonth() + 1) + "&nbsp;&nbsp;&nbsp;" + time.getFullYear()
 
   unixText.innerHTML = time.getTime() +
-    (offsets.second * 1000) + (offsets.minute * 60 * 1000) + (offsets.hour * 60 * 60 * 1000);
+    (offsets.second * msPerSecond) + (offsets.minute * msPerMinute) + (offsets.hour * msPerHour);
 
   document.getElementById("time-period").innerHTML = (time.getHours() > 11) ? "PM" : "AM";
 
@@ -129,8 +132,8 @@ function updateClock() {
     //Activates a upto tenth of a second late to avoid missing the exact ms
     if (alarmTimes[0] > time.getTime() - 100){
       //Removes alarm to prevent additional dialogs
-      alarmTimes.shift();
       window.alert("Ding ding! You're Alarm for " +  new Date(alarmTimes[0]) + " is going off!");
+      alarmTimes.shift();
     }
     else {
       let removedAlarms = [];
@@ -147,25 +150,20 @@ function updateClock() {
 
 
   function formatTimeDiscrepency(elapsedTimeMs) {
-    const minuteInMs = 1000 * 60;
 
     //Reset timer if it goes on for too long,
-    if(elapsedTimeMs > minuteInMs * 99) elapsedTimeMs = 0;
+    if(elapsedTimeMs > msPerMinute * 99) elapsedTimeMs = 0;
 
-    const minutes = Math.floor(elapsedTimeMs / minuteInMs);
-    elapsedTimeMs = elapsedTimeMs - (minutes * minuteInMs);
+    const minutes = Math.floor(elapsedTimeMs / msPerMinute);
+    elapsedTimeMs = elapsedTimeMs - (minutes * msPerMinute);
 
-    const seconds = Math.floor(elapsedTimeMs / 1000);
-    elapsedTimeMs = elapsedTimeMs - (seconds * 1000);
+    const seconds = Math.floor(elapsedTimeMs / msPerSecond);
+    elapsedTimeMs = elapsedTimeMs - (seconds * msPerSecond);
 
     return formatTime(minutes) + ":" + formatTime(seconds) + ":" + elapsedTimeMs;
   }
 
   function calculateTotalOffsetInMs() {
-    const msPerSecond = 1000; const msPerMinute = msPerSecond * 60; const msPerHour = msPerMinute * 60;
-    const msPerDay = msPerHour * 24; const msPerMonth = msPerDay * 30; const msPerYear = msPerMonth * 12;
-
-
     return (offsets.year * msPerYear) +
       (offsets.month * msPerMonth) +
       (offsets.day * msPerDay) +
@@ -199,7 +197,6 @@ const setNewAlarm = function () {
   else {
     let match = alarmPattern.exec(timeString);
 
-    console.log(match[1] + 'T' + match[1] + 'Z');
     alarmTimeUnix = new Date(match[1] + 'T' + match[2] + 'Z').getTime();
 
     if(time.getTime() > alarmTimeUnix) {
